@@ -1,0 +1,37 @@
+version: '3'
+services:
+  controller:
+    build: ./centos
+    privileged: true 
+    container_name: controller
+    hostname: 'controller'
+    volumes:
+     - .:/code
+    working_dir: /code
+    command: bash -c "
+      ./centos/controller.sh &&
+      tail -f /dev/null"
+  ansible1:
+    build: ./ubuntu
+    container_name: ansible1
+    hostname: 'ansible1'
+    volumes:
+     - .:/code
+    working_dir: /code
+    command: bash -c "
+      ./ubuntu/targets.sh &&
+      tail -f /dev/null"
+    depends_on: 
+     - controller
+  ansible2:
+    build: ./centos
+    container_name: ansible2
+    hostname: 'ansible2'
+    volumes:
+     - .:/code
+    working_dir: /code
+    command: bash -c "
+      ./centos/targets.sh &&
+      tail -f /dev/null"
+    depends_on: 
+     - controller

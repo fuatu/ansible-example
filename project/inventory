@@ -1,0 +1,13 @@
+[webservers]
+ansible1
+ansible2
+
+[databases]
+ansible1
+ansible2
+
+[ubuntu]
+ansible1
+
+[centos]
+ansible2

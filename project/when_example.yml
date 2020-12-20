@@ -1,0 +1,13 @@
+---
+- name: test when 
+  hosts: all
+  tasks:
+    # for this task put the current day number of the month
+    - name: check a fact - today is 20 and will work
+      debug:
+        msg: echo today is 20
+      when: '"20" in ansible_date_time.day'
+    - name: check a fact - will not work
+      debug:
+        msg: echo today is 23
+      when: '"23" in ansible_date_time.day'

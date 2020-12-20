@@ -19,6 +19,7 @@ cp ~/.ssh/id_rsa.pub /code
 mkdir /home/ansible/.ssh
 cp ~/.ssh/id_rsa /home/ansible/.ssh
 chown ansible /home/ansible/.ssh/id_rsa
+chown ansible /home/ansible/.ssh
 echo 'container started' ; 
 echo "-------------------------"
 echo "install ansible"

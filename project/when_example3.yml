@@ -1,0 +1,9 @@
+---
+- name: conditional tests
+  hosts: all
+  tasks:
+    - name: find mounts with /etc/hosts
+      debug:
+        msg: folder /etc/hosts found
+      with_items: "{{ ansible_mounts }}"
+      when: item.mount == "/etc/hosts" and item.size_available > 100

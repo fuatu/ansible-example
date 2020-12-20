@@ -1,0 +1,20 @@
+---
+- name: testing handlers
+  hosts: all
+  tasks:
+    - name: success task
+      command: echo hello
+      notify: 
+        - successfull_me
+    - name: failed task
+      copy:
+        src: /tmp/nothing
+        dest: /tmp/something
+      notify:
+        - failed_me
+  handlers:
+    - name: successfull_me
+      shell: "echo success > ~/ok"
+    - name: failed_me
+      debug:
+        msg: "failed :(("

@@ -1,0 +1,14 @@
+---
+- name: test when 
+  hosts: all
+  vars:
+    supported_distros:
+      - RedHat
+      - CentOS
+      - Fedora
+  tasks:
+    - name: install enterprise linux specific packages
+      yum:
+        name: nano
+        state: present
+      when: ansible_distribution in supported_distros

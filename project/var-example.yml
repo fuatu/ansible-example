@@ -1,0 +1,9 @@
+---
+- name: create user by using variable
+  hosts: all
+  vars:
+    user: lisa
+  tasks:
+    - name: create user {{ user }}
+      user:
+        name: "{{ user }}"

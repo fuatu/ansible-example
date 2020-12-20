@@ -1,0 +1,10 @@
+---
+# install role with command below
+# ansible-galaxy collection install nginxinc.nginx
+- name: use galaxy ngnix role
+  hosts: ansible1
+  user: ansible
+  become: true
+
+  roles:
+    - role: nginxinc.nginx

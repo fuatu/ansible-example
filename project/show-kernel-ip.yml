@@ -1,0 +1,8 @@
+---
+- name: show facts
+  hosts: all
+  tasks:
+    - name: print kernel and ip
+      debug: 
+        msg: >
+          Host kernel is {{ ansible_facts.kernel }} and IP is {{ ansible_facts.default_ipv4.address }}

@@ -1,0 +1,13 @@
+---
+- name: start some services
+  hosts: ubuntu
+  vars:
+    my_services:
+      - cron
+      - ssh
+  tasks:
+    - name: start some services
+      service:
+        name: "{{ item }}"
+        state: started
+      loop: "{{ my_services }}"

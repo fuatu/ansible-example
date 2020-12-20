@@ -29,3 +29,38 @@ uid=1000(ansible) gid=1000(ansible) groups=1000(ansible),27(sudo)
 ansible2 | CHANGED | rc=0 >>
 uid=1000(ansible) gid=1000(ansible) groups=1000(ansible),10(wheel)
 ```
+
+# create secret example
+it will ask a password for the yml file, after that you can fill the details. 
+```
+# ansible-vault create secret.yml
+user: mario
+pass: password
+```
+example usage in secret-example.yml
+```
+# ansible-playbook --ask-vault-pass secret-example.yml
+```
+
+# ansible-galaxy and role example
+
+```
+$ ansible-galaxy search nginx
+$ ansible-galaxy collection install nginxinc.nginx_core
+```
+roles example yml
+```
+---
+# install role with command below
+# ansible-galaxy collection install nginxinc.nginx_core
+- name: use galaxy ngnix role
+  hosts: ansible2
+  user: ansible
+  become: true
+  roles:
+    - role: nginxinc.nginx_core
+```
+
+```
+$ ansible-playbook roles_example.yml
+```

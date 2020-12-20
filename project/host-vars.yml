@@ -1,0 +1,12 @@
+---
+# this is an example for using group vars with host groups
+# the folder structure is groups_var/ubuntu
+- name: hosts group variables example
+  hosts: ubuntu
+  tasks:
+    - name: testing variables under groups_var/ubuntu
+      debug:
+        msg: "Installing package {{ web_package }}"
+    - name: next variable
+      debug:
+        msg: "Second var {{ second_var }}"

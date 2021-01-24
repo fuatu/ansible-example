@@ -1,0 +1,10 @@
+---
+- name: backup database
+  hosts: all
+  vars:
+    backup_script: "innobackupex --defaults-file={{ mysql_cnf }} --user={{ username }} --password={{ password }} --databases=\"{{ databases }}\" --compress --stream=xbstream ./ | ssh {{ ssh_user }}@{{ backup_server }} \"cat -> {{backup_folder }}{{ ansible_date_time.date }}{{ client }}{{ ansible_date_time.weekday_number }}.tar\""
+  tasks:
+    - debug: 
+        msg: "{{ backup_script }}"
+    - name: execute backup script
+      shell: "{{ backup_script }}"

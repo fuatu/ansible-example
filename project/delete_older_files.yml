@@ -1,0 +1,46 @@
+---
+- hosts: all
+  vars:
+    # set this to true for simulation only without delete
+    no_delete: "Yes"
+    # list of folders 
+    folders: 
+      - folder:
+          name: /var/log
+          days: 30d
+      - folder:
+          name: /tmp
+          days: 5d
+  tasks:
+    - name: Initialize an empty list for our strings
+      set_fact:
+        files: []
+    # for each folder and defined day loop and collect files older than X days
+    - name: find all files that are older than X days
+      find:
+        paths: "{{ item.folder.name }}"
+        age: "{{ item.folder.days }}"
+        recurse: yes
+      register: olderFiles
+      with_items: "{{ folders }}"
+
+    # append all files to a fact
+    - name: set facts
+      set_fact:
+        files: "{{ files + [ item.files ] }}" 
+      with_items: "{{ olderFiles.results  }}"
+
+    # no delete - just display
+    - name: list files older than x days - no delete
+      debug:
+        msg: "{{ item.path }}" 
+      with_items: "{{ files }}"
+      when: no_delete == "Yes"
+
+    # delete files
+    - name: delete files older than x days 
+      file:
+        path: "{{ item.path }}" 
+        state: absent
+      with_items: "{{ files }}"
+      when: no_delete != "Yes"
